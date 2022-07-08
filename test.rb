@@ -66,6 +66,15 @@ describe('Selenium 4') do
     expect(a_our_work.text).to eql "Our work"
     expect(img_logo[:src]).to eql "https://compass.uol/triangle.svg"
   end
+  
+  it('Runs on Selenium Grid') do
+    caps = Selenium::WebDriver::Remote::Capabilities.chrome("goog:chromeOptions" => {"args" => ["--headless"]})
+    @driver = Selenium::WebDriver.for(:remote,
+      :url => "http://localhost:4444/wd/hub",
+      :capabilities => caps)
+    @driver.navigate.to "http://google.com"
+    expect(@driver.title).to eql "Google"
+  end
 end
 
 # https://www.selenium.dev/selenium/docs/api/rb/Selenium/WebDriver/DriverExtensions/HasNetworkInterception.html
